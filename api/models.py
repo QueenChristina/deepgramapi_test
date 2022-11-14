@@ -14,6 +14,7 @@ class Audio(models.Model):
     filesize = models.IntegerField(blank=True, null=True) # bytes
     bitrate = models.IntegerField(blank=True, null=True) # kBits/s
 
+    # Extract metadata from audio file to be saved in db
     def save(self, *args, **kwargs):
         self.name = self.file.name
         audio = TinyTag.get(self.file.file.temporary_file_path())
