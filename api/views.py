@@ -5,6 +5,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import status
 from django.http import Http404
+from django.http import FileResponse
 from .serializers import AudioSerializer
 from .models import Audio
 
@@ -45,6 +46,14 @@ class AudioViewSet(viewsets.ModelViewSet):
             queryset = queryset.order_by('duration')
         if self.request.query_params.get('bitrate') is not None:
             queryset = queryset.order_by('bitrate')
+
+        filename = self.request.query_params.get('download_filename')
+        if filename is not None:
+            # if filename is not None:
+            some_file = Audio.objects.filter(name=filename).first()
+            response = FileResponse(some_file.file, content_type="text/csv")
+            response['Content-Disposition'] = 'attachment; filename="%s"'%filename
+            return response
 
         serializer = AudioSerializer(queryset, many=True, context = {'request': request})
         return Response(serializer.data)
