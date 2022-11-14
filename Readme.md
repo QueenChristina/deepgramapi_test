@@ -1,5 +1,11 @@
 # Audio Upload API
-Simple API server that handles user audio projects. Endpoints allow the following actions: 
+Simple API server that handles user audio projects. 
+Run:
+```
+python3 manage.py runserver
+```
+
+Endpoints allow the following actions: 
 
 1. POST raw audio data and store it. 
 
@@ -8,8 +14,7 @@ $ curl -i --form file=@myfile.wav http://localhost:8000/audios/
 ```
 or
 ```
-$ curl -X POST -H "Content-Type:multipart/form-data" -F "file=@HappyDay.wav" ht
-tp://localhost:8000/audios/
+$ curl -X POST -H "Content-Type:multipart/form-data" -F "file=@myfile.wav" http://localhost:8000/audios/
 ```
 
 2. GET a list of stored files, GET the content of stored files, and GET metadata of stored files, such as the duration of the audio. The GET endpoint(s) should accept a query parameter that allows the user to filter results. Results should be returned as JSON. 
